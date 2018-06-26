@@ -2,6 +2,8 @@ import * as express from 'express';
 import { Application, ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import * as bodyParser from 'body-parser';
 import SendTextEndpoint from '../application/send-text-endpoint';
+import ReceiveResponseEndpoint from '../application/receive-response-endpoint';
+
 
 // tslint:disable-next-line no-any
 export const errorHandler: ErrorRequestHandler = function (err: any, req: Request, res: Response, next: NextFunction) {
@@ -44,6 +46,7 @@ class App {
     });
     this.express.use('/', router);
     this.express.use('/api/send-text', SendTextEndpoint);
+    this.express.use('/api/receive-response', ReceiveResponseEndpoint);
   }
 }
 
