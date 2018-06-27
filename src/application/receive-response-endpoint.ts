@@ -12,8 +12,8 @@ class ReceiveResponseEndpoint {
     }
 
     private receiveResponse(req: Request, res: Response, next: NextFunction) {
-        this.receiveResponseService.receiveResponse(req.body);
-        res.json({});
+        this.receiveResponseService.receiveResponse(req.body)
+            .then(() => res.json({}));
     }
 
 

@@ -17,10 +17,7 @@ export class SendTextService {
                 headers: {Authorization: `Bearer ${process.env.BEARER_TOKEN}`}
             })
             .then((resp) => {
-
-                console.log('received resp', resp.data);
-
-
+                console.log('message send successfully', resp.data);
             })
             .catch((err) => {
                 console.log('Error: ', err);

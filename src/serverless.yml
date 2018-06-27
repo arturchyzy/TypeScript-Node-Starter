@@ -18,6 +18,7 @@ provider:
   environment:
     ALLOWED_DOMAIN: "${self:custom.allowedOrigin.${self:custom.stage}}"
     BEARER_TOKEN: "configure it on AWS"
+    WEATHER_KEY: "configure it on AWS"
 
   iamRoleStatements:
     - Effect: Allow
