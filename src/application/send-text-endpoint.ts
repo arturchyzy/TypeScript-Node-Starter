@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response, Router } from "express";
-import { SendTextService } from "../infrastructure/scg/send-text.service";
+import { NextFunction, Request, Response, Router } from 'express';
+import { SendTextService } from '../infrastructure/scg/send-text.service';
 
 class SendTextEndpoint {
     readonly router: Router;
@@ -12,14 +12,14 @@ class SendTextEndpoint {
     }
 
     private sendText(req: Request, res: Response, next: NextFunction) {
-        this.sendTextService.sendText(req.body.to, req.body.text);
-        res.json({});
+        this.sendTextService.sendText(req.body.to, req.body.text)
+            .then(() => res.json({}));
     }
 
 
     private init() {
         this.router.post(
-            "/",
+            '/',
             (req, res, next) => this.sendText(req, res, next)
         );
     }

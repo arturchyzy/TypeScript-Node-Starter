@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response, Router } from "express";
-import { ReceiveResponseService } from "../infrastructure/scg/receive-response.service";
+import { NextFunction, Request, Response, Router } from 'express';
+import { ReceiveResponseService } from '../infrastructure/scg/receive-response.service';
 
 class ReceiveResponseEndpoint {
     readonly router: Router;
@@ -19,7 +19,7 @@ class ReceiveResponseEndpoint {
 
     private init() {
         this.router.post(
-            "/",
+            '/',
             (req, res, next) => this.receiveResponse(req, res, next)
         );
     }

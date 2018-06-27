@@ -1,0 +1,64 @@
+#tutorial on setting up VPC for lambda : https://gist.github.com/reggi/dc5f2620b7b4f515e68e46255ac042a7
+#original configuration for production environment is available on config/production branch
+service: sdc-tryout-api
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  allowedOrigin:
+    dev: '*'
+
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: eu-west-2
+  stage: dev
+  memorySize: 512
+  timeout: 24
+  environment:
+    ALLOWED_DOMAIN: "${self:custom.allowedOrigin.${self:custom.stage}}"
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ec2:CreateNetworkInterface
+        - ec2:DescribeNetworkInterfaces
+        - ec2:DeleteNetworkInterface
+      Resource: "*"
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:InvokeFunction'
+      Resource: "*"
+
+plugins:
+- serverless-offline
+- serverless-webpack
+- serverless-plugin-warmup
+
+functions:
+
+  hello:
+    warmup: true
+    handler: handler.expressProxy
+    events:
+     - http:
+         path: api/{proxy+}
+         method: any
+         cors:
+          origin: "${self:custom.allowedOrigin.${self:custom.stage}}"
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+
+resources:
+  Resources:
+
+Outputs:
+  ApiUrl:
+    Value:
+      "Fn::Join" : ["", [ "https://", { "Ref" : "ApiGatewayRestApi" }, ".execute-api.${self:provider.region}.amazonaws.com/${self:custom.stage}" ] ]

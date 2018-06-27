@@ -1,9 +1,11 @@
+import * as dotenv from 'dotenv';
 import * as http from 'http';
 import * as compression from 'compression';
 import * as lusca from 'lusca';
 import * as debugFunction from 'debug';
 import App, { errorHandler } from './infrastructure/App';
 
+dotenv.config({path: '.env'});
 const debug = debugFunction('dsp-console:mock-server');
 const port = normalizePort(process.env.PORT || 3000);
 App.set('port', port);
