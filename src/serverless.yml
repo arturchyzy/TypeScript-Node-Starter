@@ -17,6 +17,7 @@ provider:
   timeout: 24
   environment:
     ALLOWED_DOMAIN: "${self:custom.allowedOrigin.${self:custom.stage}}"
+    BEARER_TOKEN: "configure it on AWS"
 
   iamRoleStatements:
     - Effect: Allow

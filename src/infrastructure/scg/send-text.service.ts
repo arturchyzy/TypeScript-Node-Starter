@@ -14,7 +14,7 @@ export class SendTextService {
                 to: [to]
             },
             {
-                headers: {Authorization: 'Bearer 7c382c26-174d-37f4-bc25-4c30d866d758'}
+                headers: {Authorization: `Bearer ${process.env.BEARER_TOKEN}`}
             })
             .then((resp) => {
 
